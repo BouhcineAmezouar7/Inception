@@ -1,0 +1,119 @@
+services:
+  mariadb:
+    build: ./requirements/mariadb
+    image: mariadb:inception
+    restart: always
+    env_file: .env
+    volumes:
+      - db_volume:/var/lib/mysql
+    networks:
+      - inception_network
+
+  redis:
+    build: ./requirements/bonus/redis
+    image: redis:inception
+    restart: always
+    volumes:
+      - redis_volume:/data
+    networks:
+      - inception_network
+
+  wordpress:
+    build: ./requirements/wordpress
+    image: wordpress:inception
+    restart: always
+    env_file: .env
+    volumes:
+      - wp_volume:/var/www/html
+    networks:
+      - inception_network
+    depends_on:
+      - mariadb
+      - redis
+
+  nginx:
+    build: ./requirements/nginx
+    image: nginx:inception
+    restart: always
+    ports:
+      - "443:443"
+    volumes:
+      - wp_volume:/var/www/html
+    networks:
+      - inception_network
+    depends_on:
+      - wordpress
+
+  adminer:
+    build: ./requirements/bonus/adminer
+    image: adminer:inception
+    restart: always
+    ports:
+      - "8080:8080"
+    networks:
+      - inception_network
+    depends_on:
+      - mariadb
+
+  ftp:
+    build: ./requirements/bonus/ftp
+    image: ftp:inception
+    restart: always
+    env_file: .env
+    volumes:
+      - wp_volume:/var/www/html
+    ports:
+      - "21:21"                            # FTP control port (standard FTP port) used for commands and authentication
+      - "21100-21110:21100-21110"          # FTP passive mode port range used for data transfer (must be configured in FTP server)
+    networks:
+      - inception_network
+    depends_on:
+      - wordpress
+
+  portainer:
+    build: ./requirements/bonus/portainer
+    image: portainer:inception
+    restart: always
+    ports:
+      - "9443:9443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  # Access Docker daemon from Portainer container
+    networks:
+      - inception_network
+
+  website:
+    build: ./requirements/bonus/website
+    image: website:inception
+    restart: always
+    ports:
+      - "1337:80"
+    networks:
+      - inception_network
+
+volumes:
+  db_volume:
+    driver: local                          # Use local host storage
+    driver_opts:
+      type: none                           # No special volume type
+      device: /home/bamezoua/data/db      # Host machine path for database
+      o: bind                              # Bind mount (direct directory link)
+
+  wp_volume:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/bamezoua/data/wp
+      o: bind
+
+  redis_volume:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/bamezoua/data/redis
+      o: bind
+
+networks:
+  # Custom bridge network: All services communicate through this network
+  inception_network:
+    driver: bridge                         # Bridge driver enables container-to-container communication
+
