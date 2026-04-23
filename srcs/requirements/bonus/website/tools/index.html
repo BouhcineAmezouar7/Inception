@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bamezoua - Web Developer | 1337 School</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+      * { font-family: 'Inter', sans-serif; }
+      .gradient-text { background: linear-gradient(135deg, #2c5aa0 0%, #1e3a5f 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+      .glass { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+      .card-hover { transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1); }
+      .card-hover:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(44, 90, 160, 0.15); }
+      .skill-badge { background: linear-gradient(135deg, #2c5aa0 0%, #1e3a5f 100%); }
+    </style>
+  </head>
+  <body class="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-950 text-white">
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 glass border-b border-blue-700/30">
+      <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <div class="text-2xl font-bold gradient-text">BA</div>
+        <ul class="flex items-center gap-8 text-sm font-medium">
+          <li><a href="#about" class="hover:text-blue-400 transition">About</a></li>
+          <li><a href="#skills" class="hover:text-blue-400 transition">Skills</a></li>
+          <li><a href="#projects" class="hover:text-blue-400 transition">Projects</a></li>
+          <li><a href="#contact" class="hover:text-blue-400 transition">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-slate-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div class="absolute top-1/2 left-1/2 w-80 h-80 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+      </div>
+      <div class="relative mx-auto max-w-4xl px-6 py-24 text-center">
+        <div class="mb-6 inline-block">
+          <span class="glass px-4 py-2 rounded-full text-sm text-blue-300">Welcome to my portfolio</span>
+        </div>
+        <h1 class="mb-6 text-6xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-blue-400 to-indigo-400">Bamezoua</h1>
+        <p class="mb-2 text-2xl font-light text-gray-300">Full-Stack Web Developer</p>
+        <p class="mb-8 text-gray-400 max-w-2xl mx-auto">1337 School Student | Crafting elegant solutions for complex problems | Specialized in modern web technologies</p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="#projects" class="group relative px-8 py-4 font-semibold rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 hover:shadow-lg hover:shadow-blue-600/50 transition">
+            View My Work
+            <span class="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-700 to-blue-800 opacity-0 group-hover:opacity-100 transition"></span>
+          </a>
+          <a href="#contact" class="px-8 py-4 font-semibold rounded-lg glass hover:bg-white/20 transition">Get in Touch</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="mx-auto mb-20 grid max-w-6xl grid-cols-1 gap-6 px-6 sm:grid-cols-3">
+      <div class="card-hover group glass rounded-2xl p-8 text-center">
+        <div class="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-300 to-blue-400">15+</div>
+        <div class="mt-3 text-gray-300 font-medium">Projects Completed</div>
+      </div>
+      <div class="card-hover group glass rounded-2xl p-8 text-center">
+        <div class="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-300 to-blue-400">8</div>
+        <div class="mt-3 text-gray-300 font-medium">Core Technologies</div>
+      </div>
+      <div class="card-hover group glass rounded-2xl p-8 text-center">
+        <div class="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-300 to-indigo-400">2+</div>
+        <div class="mt-3 text-gray-300 font-medium">Years Experience</div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="mx-auto mb-20 max-w-6xl rounded-2xl glass px-8 py-16 md:p-16">
+      <div class="grid items-center gap-12 md:grid-cols-2">
+        <div>
+          <h2 class="mb-4 text-4xl font-bold">
+            <span class="gradient-text">About Me</span>
+          </h2>
+          <p class="mb-4 text-gray-300 leading-relaxed">I'm a passionate web developer currently studying at 1337 School, dedicated to creating elegant solutions to complex problems. I specialize in full-stack development with a focus on modern web technologies and best practices.</p>
+          <p class="mb-6 text-gray-300 leading-relaxed">With a strong foundation in computer science and hands-on experience building production-grade applications, I'm committed to continuous learning and contributing to innovative projects.</p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <span class="skill-badge px-4 py-2 rounded-full text-sm font-medium text-white">JavaScript</span>
+            <span class="skill-badge px-4 py-2 rounded-full text-sm font-medium text-white">React</span>
+            <span class="skill-badge px-4 py-2 rounded-full text-sm font-medium text-white">Node.js</span>
+            <span class="skill-badge px-4 py-2 rounded-full text-sm font-medium text-white">Docker</span>
+            <span class="skill-badge px-4 py-2 rounded-full text-sm font-medium text-white">SQL</span>
+          </div>
+        </div>
+        <div class="mx-auto w-full max-w-sm">
+          <div class="glass rounded-2xl p-8 text-center border-l-4 border-blue-400">
+            <div class="text-6xl mb-4">👨‍💻</div>
+            <p class="text-lg font-semibold text-blue-300">1337 School</p>
+            <p class="text-gray-300">Full-Stack Developer</p>
+            <p class="text-gray-400 text-sm mt-4">Learning • Building • Growing</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="mx-auto mb-20 max-w-6xl px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold gradient-text mb-4">Technical Skills</h2>
+        <p class="text-gray-400 max-w-2xl mx-auto">Proficient in modern technologies with hands-on experience in full-stack development</p>
+      </div>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="card-hover group glass rounded-xl p-8 border border-blue-700/30">
+          <div class="text-4xl mb-4 group-hover:scale-110 transition">🎨</div>
+          <h3 class="text-xl font-semibold text-white mb-2">Frontend</h3>
+          <p class="text-gray-400 text-sm mb-4">HTML5, CSS3, JavaScript, React, Tailwind CSS, responsive design.</p>
+          <span class="inline-block bg-gradient-to-r from-blue-600 to-blue-700 text-white px-3 py-1 rounded-full text-xs font-medium">Proficient</span>
+        </div>
+        <div class="card-hover group glass rounded-xl p-8 border border-blue-700/30">
+          <div class="text-4xl mb-4 group-hover:scale-110 transition">⚙️</div>
+          <h3 class="text-xl font-semibold text-white mb-2">Backend</h3>
+          <p class="text-gray-400 text-sm mb-4">Node.js, Express, REST APIs, authentication, middleware.</p>
+          <span class="inline-block bg-gradient-to-r from-indigo-600 to-blue-600 text-white px-3 py-1 rounded-full text-xs font-medium">Proficient</span>
+        </div>
+        <div class="card-hover group glass rounded-xl p-8 border border-blue-700/30">
+          <div class="text-4xl mb-4 group-hover:scale-110 transition">💾</div>
+          <h3 class="text-xl font-semibold text-white mb-2">Databases</h3>
+          <p class="text-gray-400 text-sm mb-4">SQL, MariaDB, MongoDB, relational data modeling.</p>
+          <span class="inline-block bg-gradient-to-r from-slate-600 to-indigo-600 text-white px-3 py-1 rounded-full text-xs font-medium">Intermediate</span>
+        </div>
+        <div class="card-hover group glass rounded-xl p-8 border border-blue-700/30">
+          <div class="text-4xl mb-4 group-hover:scale-110 transition">🐳</div>
+          <h3 class="text-xl font-semibold text-white mb-2">DevOps</h3>
+          <p class="text-gray-400 text-sm mb-4">Docker, Docker Compose, containerization, orchestration.</p>
+          <span class="inline-block bg-gradient-to-r from-blue-700 to-slate-600 text-white px-3 py-1 rounded-full text-xs font-medium">Intermediate</span>
+        </div>
+        <div class="card-hover group glass rounded-xl p-8 border border-blue-700/30">
+          <div class="text-4xl mb-4 group-hover:scale-110 transition">🔧</div>
+          <h3 class="text-xl font-semibold text-white mb-2">Tools & Platforms</h3>
+          <p class="text-gray-400 text-sm mb-4">Git, GitHub, VS Code, Linux, Nginx, Make.</p>
+          <span class="inline-block bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-3 py-1 rounded-full text-xs font-medium">Proficient</span>
+        </div>
+        <div class="card-hover group glass rounded-xl p-8 border border-blue-700/30">
+          <div class="text-4xl mb-4 group-hover:scale-110 transition">🚀</div>
+          <h3 class="text-xl font-semibold text-white mb-2">Problem Solving</h3>
+          <p class="text-gray-400 text-sm mb-4">Debugging, optimization, clean code, design patterns.</p>
+          <span class="inline-block bg-gradient-to-r from-indigo-600 to-blue-700 text-white px-3 py-1 rounded-full text-xs font-medium">Proficient</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="mx-auto mb-20 max-w-6xl px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold gradient-text mb-4">Featured Projects</h2>
+        <p class="text-gray-400 max-w-2xl mx-auto">Showcasing my expertise in full-stack development and modern web technologies</p>
+      </div>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="card-hover glass rounded-xl p-6 border border-blue-700/30 group">
+          <div class="text-3xl mb-3 group-hover:scale-110 transition">🌐</div>
+          <h4 class="text-lg font-semibold text-white mb-2">Inception</h4>
+          <p class="text-gray-400 text-sm mb-4">Docker infrastructure for WordPress with NGINX, MariaDB, PHP-FPM, Redis caching, and full TLS security.</p>
+          <div class="mb-4 flex flex-wrap gap-2">
+            <span class="bg-gradient-to-r from-blue-600/30 to-blue-700/30 text-blue-300 text-xs px-2 py-1 rounded">Docker</span>
+            <span class="bg-gradient-to-r from-blue-700/30 to-indigo-600/30 text-blue-300 text-xs px-2 py-1 rounded">NGINX</span>
+            <span class="bg-gradient-to-r from-indigo-600/30 to-blue-600/30 text-indigo-300 text-xs px-2 py-1 rounded">WordPress</span>
+          </div>
+          <span class="inline-block bg-gradient-to-r from-green-600 to-emerald-600 text-white px-3 py-1 text-xs font-semibold rounded-full">Completed</span>
+        </div>
+
+        <div class="card-hover glass rounded-xl p-6 border border-blue-700/30 group">
+          <div class="text-3xl mb-3 group-hover:scale-110 transition">📱</div>
+          <h4 class="text-lg font-semibold text-white mb-2">Web Application</h4>
+          <p class="text-gray-400 text-sm mb-4">Full-stack web application with React frontend, Node.js backend, and MongoDB. Includes authentication and responsive design.</p>
+          <div class="mb-4 flex flex-wrap gap-2">
+            <span class="bg-gradient-to-r from-blue-600/30 to-slate-600/30 text-blue-300 text-xs px-2 py-1 rounded">React</span>
+            <span class="bg-gradient-to-r from-slate-600/30 to-indigo-600/30 text-slate-300 text-xs px-2 py-1 rounded">Node.js</span>
+            <span class="bg-gradient-to-r from-indigo-600/30 to-blue-600/30 text-indigo-300 text-xs px-2 py-1 rounded">MongoDB</span>
+          </div>
+          <span class="inline-block bg-gradient-to-r from-green-600 to-emerald-600 text-white px-3 py-1 text-xs font-semibold rounded-full">Completed</span>
+        </div>
+
+        <div class="card-hover glass rounded-xl p-6 border border-blue-700/30 group">
+          <div class="text-3xl mb-3 group-hover:scale-110 transition">🛠️</div>
+          <h4 class="text-lg font-semibold text-white mb-2">API Development</h4>
+          <p class="text-gray-400 text-sm mb-4">RESTful API with Express, JWT authentication, role-based access control, and comprehensive error handling.</p>
+          <div class="mb-4 flex flex-wrap gap-2">
+            <span class="bg-gradient-to-r from-blue-700/30 to-blue-600/30 text-blue-300 text-xs px-2 py-1 rounded">Express</span>
+            <span class="bg-gradient-to-r from-blue-600/30 to-indigo-600/30 text-blue-300 text-xs px-2 py-1 rounded">JWT</span>
+            <span class="bg-gradient-to-r from-indigo-600/30 to-blue-700/30 text-indigo-300 text-xs px-2 py-1 rounded">SQL</span>
+          </div>
+          <span class="inline-block bg-gradient-to-r from-green-600 to-emerald-600 text-white px-3 py-1 text-xs font-semibold rounded-full">Completed</span>
+        </div>
+
+        <div class="card-hover glass rounded-xl p-6 border border-blue-700/30 group">
+          <div class="text-3xl mb-3 group-hover:scale-110 transition">🎨</div>
+          <h4 class="text-lg font-semibold text-white mb-2">Frontend Projects</h4>
+          <p class="text-gray-400 text-sm mb-4">Multiple responsive web projects with vanilla JavaScript, HTML5, CSS3, and modern frameworks. Mobile-first approach.</p>
+          <div class="mb-4 flex flex-wrap gap-2">
+            <span class="bg-gradient-to-r from-blue-600/30 to-blue-700/30 text-blue-300 text-xs px-2 py-1 rounded">HTML5</span>
+            <span class="bg-gradient-to-r from-blue-700/30 to-slate-600/30 text-blue-300 text-xs px-2 py-1 rounded">CSS3</span>
+            <span class="bg-gradient-to-r from-slate-600/30 to-blue-600/30 text-slate-300 text-xs px-2 py-1 rounded">JavaScript</span>
+          </div>
+          <span class="inline-block bg-gradient-to-r from-green-600 to-emerald-600 text-white px-3 py-1 text-xs font-semibold rounded-full">Completed</span>
+        </div>
+
+        <div class="card-hover glass rounded-xl p-6 border border-blue-700/30 group">
+          <div class="text-3xl mb-3 group-hover:scale-110 transition">🔐</div>
+          <h4 class="text-lg font-semibold text-white mb-2">Security Implementations</h4>
+          <p class="text-gray-400 text-sm mb-4">Projects focusing on secure coding: encryption, input validation, HTTPS, secure session management, and vulnerability prevention.</p>
+          <div class="mb-4 flex flex-wrap gap-2">
+            <span class="bg-gradient-to-r from-indigo-600/30 to-blue-600/30 text-indigo-300 text-xs px-2 py-1 rounded">Security</span>
+            <span class="bg-gradient-to-r from-blue-600/30 to-slate-600/30 text-blue-300 text-xs px-2 py-1 rounded">Encryption</span>
+            <span class="bg-gradient-to-r from-slate-600/30 to-indigo-600/30 text-slate-300 text-xs px-2 py-1 rounded">HTTPS</span>
+          </div>
+          <span class="inline-block bg-gradient-to-r from-green-600 to-emerald-600 text-white px-3 py-1 text-xs font-semibold rounded-full">Completed</span>
+        </div>
+
+        <div class="card-hover glass rounded-xl p-6 border border-blue-700/30 group">
+          <div class="text-3xl mb-3 group-hover:scale-110 transition">⚡</div>
+          <h4 class="text-lg font-semibold text-white mb-2">Performance Optimization</h4>
+          <p class="text-gray-400 text-sm mb-4">Projects optimized for speed: caching strategies, database indexing, code splitting, and load balancing.</p>
+          <div class="mb-4 flex flex-wrap gap-2">
+            <span class="bg-gradient-to-r from-blue-600/30 to-indigo-600/30 text-blue-300 text-xs px-2 py-1 rounded">Optimization</span>
+            <span class="bg-gradient-to-r from-indigo-600/30 to-blue-700/30 text-indigo-300 text-xs px-2 py-1 rounded">Caching</span>
+            <span class="bg-gradient-to-r from-blue-700/30 to-blue-600/30 text-blue-300 text-xs px-2 py-1 rounded">Performance</span>
+          </div>
+          <span class="inline-block bg-gradient-to-r from-green-600 to-emerald-600 text-white px-3 py-1 text-xs font-semibold rounded-full">Completed</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="contact" class="mx-auto mb-20 max-w-4xl rounded-2xl glass px-8 py-16 md:p-20 border-t-2 border-blue-400">
+      <h2 class="text-4xl font-bold text-center gradient-text mb-4">Let's Work Together</h2>
+      <p class="text-center text-gray-300 mb-12 max-w-2xl mx-auto">I'm always interested in hearing about new projects and opportunities. Let's create something amazing!</p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="mailto:your-email@example.com" class="group relative px-8 py-4 font-semibold rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 text-white overflow-hidden hover:shadow-lg hover:shadow-blue-600/50 transition">
+          <span class="relative z-10">Send Email</span>
+        </a>
+        <a href="#" class="px-8 py-4 font-semibold rounded-lg glass border border-blue-400 text-white hover:bg-white/10 transition">LinkedIn</a>
+        <a href="#" class="px-8 py-4 font-semibold rounded-lg glass border border-blue-400 text-white hover:bg-white/10 transition">GitHub</a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-blue-700/30 px-6 py-12 text-center text-gray-400">
+      <p class="text-sm font-medium text-gray-300 mb-2"><span class="gradient-text">Bamezoua</span></p>
+      <p class="text-sm mb-6">Web Developer & 1337 School Student</p>
+      <div class="mt-6 flex flex-wrap justify-center gap-8 mb-8">
+        <a href="#about" class="hover:text-blue-400 transition text-sm">About</a>
+        <a href="#skills" class="hover:text-blue-400 transition text-sm">Skills</a>
+        <a href="#projects" class="hover:text-blue-400 transition text-sm">Projects</a>
+        <a href="#contact" class="hover:text-blue-400 transition text-sm">Contact</a>
+      </div>
+      <p class="text-xs text-gray-500 mb-2">© 2026 All rights reserved</p>
+      <p class="text-xs text-gray-500">Built with HTML, CSS, JavaScript & Tailwind CSS</p>
+    </footer>
+  </body>
+</html>
