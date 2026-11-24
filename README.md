@@ -348,7 +348,7 @@ All implementation and configuration decisions were manually reviewed and unders
 
 Software Engineering Student at 1337 & Full-Stack Developer
 
-[GitHub](https://github.com/BouhcineAmezouar7) · [Portfolio](https://bouhcineamezouar.tech)
+[GitHub](https://github.com/BouhcineAmezouar7) · [Portfolio](https://bamezoua.vercel.app)
 
 ---
 
