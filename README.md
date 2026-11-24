@@ -1,499 +1,355 @@
 *This project has been created as part of the 42 curriculum by bamezoua.*
 
-# Inception 🐳
+# Inception
 
-A complete Docker-based infrastructure project that demonstrates containerization, orchestration, and system administration concepts.
 
----
 
-## 📋 Table of Contents
 
-- [Overview](#overview)
-- [Prerequisites](#prerequisites)
-- [Quick Start](#quick-start)
-- [Environment Configuration](#environment-configuration)
-- [Architecture](#architecture)
-- [Available Services](#available-services)
-- [Commands](#commands)
-- [Troubleshooting](#troubleshooting)
-- [Resources](#resources)
 
----
 
-## Overview
+\
 
-Inception is a system administration project based on **Docker and container orchestration**.
 
-The goal is to design and deploy a small secure infrastructure composed of multiple services running in isolated containers. Each service runs independently while communicating with others through a dedicated Docker network.
+## Description
 
-### Key Features
+Inception is a system administration and containerization project developed as part of the **1337 Coding School — 42 Network** curriculum.
 
-✅ Multi-container architecture with Docker Compose  
-✅ HTTPS/TLS encryption with NGINX reverse proxy  
-✅ WordPress with MariaDB backend  
-✅ Redis caching layer  
-✅ FTP server for file management  
-✅ Database management (Adminer)  
-✅ Container orchestration (Portainer)  
-✅ Static website hosting  
-✅ Data persistence with Docker volumes  
-✅ Secure internal networking  
+The objective is to design, configure, and deploy a secure multi-service infrastructure using Docker and Docker Compose.
 
-### Main Design Choices
+Each service runs inside an isolated container, built from a custom Dockerfile and connected through a dedicated Docker network. Persistent data is managed through Docker volumes.
 
-- **One service per container** - Single Responsibility Principle
-- **Only NGINX exposes port 443 to the host** - Security through isolation
-- **Internal communication through custom bridge network** - Service discovery via DNS
-- **Data persistence using Docker volumes** - Data survives container restarts
-- **Reverse proxy architecture** - Centralized traffic routing
-- **Separation of concerns** - Configuration separated from runtime data
+The project provides practical experience with containerization, service orchestration, reverse proxies, networking, TLS encryption, database administration, caching, and infrastructure management.
 
----
+## Infrastructure
 
-## Prerequisites
+### Mandatory Services
 
-### System Requirements
+| Service   | Responsibility                                 |
+| --------- | ---------------------------------------------- |
+| NGINX     | HTTPS entry point and reverse proxy            |
+| WordPress | Content management system running with PHP-FPM |
+| MariaDB   | Relational database and persistent storage     |
 
-- **Docker** (v20.10+)
-- **Docker Compose** (v2.0+)
-- **Make** (build tool)
-- **Linux/macOS** (Windows requires WSL2)
-- **Minimum 4GB RAM**
-- **10GB free disk space**
+### Bonus Services
 
-### Installation
-
-**Ubuntu/Debian:**
-```bash
-sudo apt-get update
-sudo apt-get install docker.io docker-compose make
-sudo usermod -aG docker $USER
-```
-
-**macOS (with Homebrew):**
-```bash
-brew install docker docker-compose
-```
-
-**Verify installation:**
-```bash
-docker --version
-docker-compose --version
-```
-
----
-
-## Quick Start
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/BouhcineAmezouar7/Inception_1337.git
-cd Inception_1337
-```
-
-### 2. Configure Environment Variables
-
-Create `srcs/.env` with your configuration:
-
-```bash
-cp srcs/.env.example srcs/.env
-nano srcs/.env
-```
-
-### 3. Update Your Domain
-
-Edit your `/etc/hosts` file to map your domain locally:
-
-```bash
-# Ubuntu/Linux
-sudo nano /etc/hosts
-
-# macOS
-sudo nano /etc/hosts
-```
-
-Add the following line:
-```
-127.0.0.1    yourdomain.42.fr
-```
-
-### 4. Build and Start Services
-
-```bash
-make build    # Build all Docker images
-make up       # Start all services
-```
-
-### 5. Access the Services
-
-| Service | URL | Port |
-|---------|-----|------|
-| **WordPress** | https://yourdomain.42.fr | 443 |
-| **Adminer** | http://localhost:8080 | 8080 |
-| **Portainer** | https://localhost:9443 | 9443 |
-| **Static Website** | http://localhost:1337 | 1337 |
-| **FTP** | localhost | 21 |
-
----
-
-## Environment Configuration
-
-### Example `.env` File
-
-Create `srcs/.env` with the following structure:
-
-```dotenv
-# Domain Configuration
-DOMAIN_NAME=bamezoua.42.fr
-
-# MariaDB Database Configuration
-DB_HOST=mariadb
-DB_NAME=wordpress
-DB_USER=wp_user
-DB_PASS=WordPressSecure456!
-
-# WordPress Admin User
-WP_ADMIN=bouhcine
-WP_ADMIN_PASS=Bouhcine1337!
-WP_ADMIN_EMAIL=bouhcine@student.42.fr
-
-# WordPress Regular User
-WP_USER=author_user
-WP_USER_EMAIL=author@student.42.fr
-WP_USER_PASS=AuthorSecure321!
-
-# Redis Configuration
-REDIS_HOST=redis
-REDIS_PORT=6379
-
-# FTP Server Configuration
-FTP_USER=wpuser
-FTP_PASS=WordPressSecure456!
-```
-
-### Environment Variables Explained
-
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `DOMAIN_NAME` | Your domain for NGINX and SSL | `yourdomain.42.fr` |
-| `DB_HOST` | MariaDB container hostname | `mariadb` |
-| `DB_NAME` | WordPress database name | `wordpress` |
-| `DB_USER` | Database user (NOT root) | `wp_user` |
-| `DB_PASS` | Database user password | Strong password |
-| `WP_ADMIN` | WordPress admin username | `admin` |
-| `WP_ADMIN_PASS` | WordPress admin password | Strong password |
-| `WP_ADMIN_EMAIL` | WordPress admin email | `admin@example.com` |
-| `REDIS_HOST` | Redis service hostname | `redis` |
-| `REDIS_PORT` | Redis service port | `6379` |
-| `FTP_USER` | FTP username | `ftpuser` |
-| `FTP_PASS` | FTP password | Strong password |
-
-### 🔐 Security Best Practices
-
-- ✅ Use strong passwords (min 12 characters with mixed case, numbers, symbols)
-- ✅ Never commit `.env` to git (already in `.gitignore`)
-- ✅ Change default credentials before production deployment
-- ✅ Use different passwords for each service
-- ✅ Rotate credentials periodically
-
----
+| Service        | Responsibility                     |
+| -------------- | ---------------------------------- |
+| Redis          | WordPress object caching           |
+| FTP            | Remote file access                 |
+| Adminer        | Web-based database administration  |
+| Portainer      | Docker container management        |
+| Static Website | Lightweight static web application |
 
 ## Architecture
 
-### Container Layout
+The core infrastructure is organized around NGINX, WordPress, and MariaDB, with Redis providing object caching.
 
-```
-┌─────────────────────────────────────────────┐
-│       Docker Custom Bridge Network           │
-│                                             │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐ │
-│  │  NGINX   │  │WordPress │  │ MariaDB  │ │
-│  │  :443    │  │  :9000   │  │  :3306   │ │
-│  └─────┬────┘  └─────┬────┘  └─────┬────┘ │
-│        │             │             │      │
-│  ┌─────┴─────┐  ┌────┴──────┐  ┌──┴─────┐│
-│  │  Redis    │  │ Adminer   │  │Portainer││
-│  │  :6379    │  │  :8080    │  │ :9443   ││
-│  └───────────┘  └───────────┘  └─────────┘│
-│                                             │
-│  ┌──────────┐  ┌──────────┐                │
-│  │   FTP    │  │ Website  │                │
-│  │  :21     │  │ :1337    │                │
-│  └──────────┘  └──────────┘                │
-└─────────────────────────────────────────────┘
+```text
+                 Client / Browser
+                         │
+                    HTTPS :443
+                         │
+                  ┌──────▼──────┐
+                  │    NGINX    │
+                  └──────┬──────┘
+                         │ FastCGI
+                  ┌──────▼──────┐
+                  │  WordPress  │
+                  │   PHP-FPM   │
+                  └───┬─────┬───┘
+                      │     │
+             ┌────────▼─┐ ┌─▼────────┐
+             │ MariaDB  │ │  Redis   │
+             └────┬─────┘ └──────────┘
+                  │
+             Database Volume
 
-External Access
-       │
-       ↓
-   NGINX :443 (Only exposed port)
-   ↓  ↓  ↓
-  All internal services
+        Dedicated Docker Bridge Network
 ```
 
-### Service Communication
+The bonus services extend the infrastructure with database administration, container management, file access, and static content hosting.
 
-- **External Access**: Only NGINX port 443 is exposed
-- **Internal DNS**: Services use container names for communication
-- **Volumes**: Data persists in Docker-managed volumes
-- **Network Isolation**: Custom bridge network isolates containers
+## Use of Docker
 
----
+Docker is used to isolate and manage each service independently instead of installing all services directly on the host operating system.
 
-## Available Services
+Docker relies on several Linux technologies:
 
-### 🌐 NGINX (Reverse Proxy)
-- Handles HTTPS/TLS termination
-- Routes traffic to WordPress
-- Generates self-signed SSL certificates
-- **Port**: 443 (external)
+- **Namespaces:** Isolate processes, networking, mounts, and other system resources.
+- **Cgroups:** Manage and limit CPU, memory, and other resource usage.
+- **Layered Images:** Provide reusable filesystem layers for efficient image building.
+- **Docker Networks:** Enable communication between isolated containers.
+- **Docker Volumes:** Preserve application data independently of container lifecycles.
 
-### 📝 WordPress (PHP-FPM)
-- Content management system
-- Communicates with MariaDB for data
-- Uses Redis for object caching
-- **Port**: 9000 (internal)
+Docker Compose defines, configures, and orchestrates the complete multi-container infrastructure.
 
-### 🗄️ MariaDB (Database)
-- Relational database for WordPress
-- Persistent volume storage
-- User and password authentication
-- **Port**: 3306 (internal)
+## Design Choices
 
-### ⚡ Redis (Cache Layer)
-- In-memory data store
-- Improves WordPress performance
-- Session caching
-- **Port**: 6379 (internal)
+- One primary service per container.
+- Custom Dockerfiles for individual services.
+- HTTPS communication through NGINX on port 443.
+- Dedicated bridge network for internal communication.
+- Additional published ports for bonus services when required.
+- Persistent storage for WordPress, MariaDB, and Redis.
+- Separation of configuration, credentials, and application data.
+- Service discovery through Docker's internal DNS.
+- Independent container lifecycles.
 
-### 📊 Adminer (Database UI)
-- Web-based database management
-- Create, read, update, delete records
-- View database structure
-- **Port**: 8080 (external)
+## Technical Comparisons
 
-### 🐳 Portainer (Container Management)
-- Docker container GUI
-- Manage containers, images, volumes
-- Monitor resource usage
-- **Port**: 9443 (external)
+### Virtual Machines vs Docker
 
-### 📤 FTP Server (VSFTPD)
-- File transfer protocol
-- Upload/download files to WordPress
-- User authentication
-- **Port**: 21 (external)
+| Virtual Machines                      | Docker Containers                      |
+| ------------------------------------- | -------------------------------------- |
+| Run a complete guest operating system | Share the host operating system kernel |
+| Hardware-level virtualization         | Operating-system-level isolation       |
+| Higher resource consumption           | Lower resource consumption             |
+| Generally slower startup              | Generally faster startup               |
+| Stronger isolation boundary           | Lightweight process isolation          |
 
-### 🌍 Static Website
-- Simple static HTML website
-- Nginx-based hosting
-- Demo/landing page
-- **Port**: 1337 (external)
+Docker is particularly useful for deploying independent services without requiring a complete operating system for each instance.
 
----
+### Secrets vs Environment Variables
 
-## Commands
+| Environment Variables                       | Docker Secrets                                       |
+| ------------------------------------------- | ---------------------------------------------------- |
+| Easy to configure                           | Designed for sensitive information                   |
+| Accessible through the process environment  | Typically provided through mounted files             |
+| May be exposed through container inspection | Reduce direct exposure through environment variables |
+| Suitable for general configuration          | Better suited for passwords and credentials          |
+
+Secrets should not be committed to version control or embedded in Docker images.
+
+In standalone Docker Compose, the security of secrets also depends on how their source files are stored and protected.
+
+### Docker Network vs Host Network
+
+| Bridge Network                               | Host Network                         |
+| -------------------------------------------- | ------------------------------------ |
+| Provides network isolation                   | Shares the host networking stack     |
+| Supports internal service discovery          | Uses host networking directly        |
+| Containers communicate through service names | Reduced network isolation            |
+| Supports selective port publishing           | Services bind directly to host ports |
+
+This project uses a dedicated bridge network to isolate services and manage internal communication.
+
+### Docker Volumes vs Bind Mounts
+
+| Docker Volumes                               | Bind Mounts                              |
+| -------------------------------------------- | ---------------------------------------- |
+| Managed through Docker                       | Map specific host filesystem paths       |
+| Independent of container lifecycles          | Directly accessible from the host        |
+| Suitable for persistent application data     | Useful for configuration and development |
+| Storage managed through volume configuration | Depend on the host directory structure   |
+
+The project uses persistent storage to preserve database records, WordPress files, and Redis data across container restarts and recreation.
+
+## Getting Started
+
+### Requirements
+
+- Linux environment or Linux virtual machine
+- Docker Engine
+- Docker Compose
+- GNU Make
+- OpenSSL
+
+Verify the installation:
+
+```bash
+docker --version
+docker compose version
+make --version
+```
+
+### Clone the Repository
+
+```bash
+git clone <repository_url>
+cd inception
+```
+
+### Environment Configuration
+
+Create and configure the environment file:
+
+```bash
+touch srcs/.env
+```
+
+Configure the variables required by the Docker Compose file and service initialization scripts.
+
+Sensitive credentials and secret files should remain outside version control.
+
+### Persistent Storage
+
+Create the required data directories:
+
+```bash
+mkdir -p /home/bamezoua/data/{db,wp,redis}
+```
+
+These directories provide persistent storage for the corresponding services.
+
+### Domain Configuration
+
+Add the following entry to your local `/etc/hosts` file when running the infrastructure locally:
+
+```text
+127.0.0.1 bamezoua.42.fr
+```
+
+When running inside a remote virtual machine, replace `127.0.0.1` with the virtual machine's IP address.
 
 ### Build and Start
 
+Build the Docker images:
+
 ```bash
-# Build all images and start containers
 make build
-
-# Start existing containers
-make up
-
-# Rebuild (clean + build)
-make re
 ```
 
-### Monitor and Debug
+Start the infrastructure:
 
 ```bash
-# View all running containers
-make ps
+make up
+```
 
-# Follow live logs from all services
-make logs
+Check running containers:
 
-# View logs from specific container
-docker compose -f srcs/docker-compose.yml logs -f wordpress
+```bash
+docker ps
+```
+
+View service logs:
+
+```bash
+docker compose -f srcs/docker-compose.yml logs -f
+```
+
+## Service Access
+
+Once the infrastructure is running, services can be accessed through their configured addresses.
+
+| Service        | Address                                          |
+| -------------- | ------------------------------------------------ |
+| WordPress      | [https://bamezoua.42.fr](https://bamezoua.42.fr) |
+| Adminer        | [http://localhost:8080](http://localhost:8080)   |
+| Portainer      | [https://localhost:9443](https://localhost:9443) |
+| FTP            | localhost:21                                     |
+| Static Website | [http://localhost:1337](http://localhost:1337)   |
+
+Bonus service addresses depend on the port mappings defined in Docker Compose.
+
+The browser may display a security warning when using a self-signed TLS certificate.
+
+## Makefile Commands
+
+| Command       | Description                           |
+| ------------- | ------------------------------------- |
+| `make build`  | Build Docker images                   |
+| `make up`     | Start all configured services         |
+| `make down`   | Stop and remove containers            |
+| `make re`     | Rebuild the infrastructure            |
+| `make fclean` | Perform a full infrastructure cleanup |
+
+**Warning:** Before running `make fclean`, verify its cleanup rules. Removing volumes or host data directories may permanently delete persistent application data.
+
+## Docker Management
+
+Useful commands for inspecting and debugging the infrastructure:
+
+```bash
+# List running containers
+docker ps
+
+# List all containers
+docker ps -a
+
+# List Docker images
+docker images
+
+# List networks
+docker network ls
+
+# List volumes
+docker volume ls
 
 # Inspect a container
-docker inspect inception-nginx-1
+docker inspect <container_name>
+
+# View container logs
+docker logs <container_name>
+
+# Access a running container
+docker exec -it <container_name> sh
+
+# Display container resource usage
+docker stats
 ```
 
-### Stop and Clean
+## Security
 
-```bash
-# Stop all containers (preserves volumes)
-make down
+The infrastructure follows several security-oriented principles:
 
-# Remove containers and volumes
-make clean
+- TLS encryption for the main website.
+- Isolation between services using Docker containers.
+- Internal communication through a dedicated network.
+- Selective publishing of container ports.
+- Sensitive credentials kept outside Docker images and version control.
+- Persistent data separated from application containers.
+- Independent service configuration.
 
-# Full clean: remove everything (DESTRUCTIVE!)
-make fclean
-```
+This infrastructure is designed for educational purposes and local deployment. Additional hardening is required before exposing administrative services to the public internet.
 
-### Useful Docker Commands
+## Technical Concepts
 
-```bash
-# Enter a running container
-docker exec -it inception-wordpress-1 bash
+Throughout this project, I explored:
 
-# View container processes
-docker top inception-mariadb-1
-
-# Check network configuration
-docker network inspect inception
-
-# View volume information
-docker volume ls
-docker volume inspect inception_wp_data
-```
-
----
-
-## Troubleshooting
-
-### Common Issues
-
-**1. Port Already in Use**
-```bash
-# Find process using port 443
-sudo lsof -i :443
-
-# Kill the process
-sudo kill -9 <PID>
-```
-
-**2. Domain Not Resolving**
-```bash
-# Check hosts file
-cat /etc/hosts
-
-# Flush DNS cache
-sudo systemd-resolve --flush-caches
-
-# Verify DNS resolution
-nslookup yourdomain.42.fr
-```
-
-**3. SSL Certificate Issues**
-```bash
-# Regenerate certificates
-rm -rf srcs/requirements/nginx/conf/ssl/
-make re
-```
-
-**4. Database Connection Failed**
-```bash
-# Check database container logs
-docker compose -f srcs/docker-compose.yml logs mariadb
-
-# Verify DB credentials in .env
-cat srcs/.env
-```
-
-**5. WordPress Shows Database Error**
-```bash
-# Check WordPress logs
-docker exec inception-wordpress-1 tail -f /var/log/php-fpm.log
-
-# Verify network connectivity
-docker exec inception-wordpress-1 ping mariadb
-```
-
-**6. Permission Denied on Data Directory**
-```bash
-# Fix directory ownership
-sudo chown -R $USER:$USER /home/$(whoami)/data
-sudo chmod -R 755 /home/$(whoami)/data
-```
-
----
-
-## Technical Deep Dive
-
-### Docker Concepts Used
-
-**Namespaces**: Isolate processes
-- PID namespace: Process isolation
-- Network namespace: Network stack isolation
-- Mount namespace: Filesystem isolation
-
-**Cgroups**: Resource management
-- Memory limits
-- CPU allocation
-- I/O restrictions
-
-**Union FileSystem**: Layer images
-- Base images as read-only layers
-- Changes in writable layer
-- Efficient storage
-
-### Network Design
-
-```
-Bridge Network: inception
-├── NGINX: 172.20.0.2
-├── WordPress: 172.20.0.3
-├── MariaDB: 172.20.0.4
-├── Redis: 172.20.0.5
-├── Adminer: 172.20.0.6
-└── FTP: 172.20.0.7
-```
-
-### Data Persistence
-
-| Service | Volume | Mount Point |
-|---------|--------|------------|
-| MariaDB | `inception_db_data` | `/var/lib/mysql` |
-| WordPress | `inception_wp_data` | `/var/www/wordpress` |
-| Redis | `inception_redis_data` | `/data` |
-
----
+- Linux system administration
+- Containerization and process isolation
+- Docker image construction
+- Multi-container orchestration
+- Linux namespaces and cgroups
+- Docker networking and internal DNS
+- Persistent storage and volume management
+- Reverse proxy architecture
+- TLS certificates and HTTPS
+- PHP-FPM and FastCGI communication
+- Database administration
+- Redis object caching
+- Infrastructure security
+- Shell scripting and build automation
 
 ## Resources
 
-### Official Documentation
+The following resources were consulted during development:
+
 - [Docker Documentation](https://docs.docker.com/)
-- [Docker Compose Reference](https://docs.docker.com/compose/compose-file/)
+- [Docker Compose Documentation](https://docs.docker.com/compose/)
+- [Docker Networking](https://docs.docker.com/engine/network/)
+- [Docker Volumes](https://docs.docker.com/engine/storage/volumes/)
 - [NGINX Documentation](https://nginx.org/en/docs/)
 - [MariaDB Documentation](https://mariadb.com/docs/)
-- [WordPress Codex](https://developer.wordpress.org/)
-
-### Learning Materials
-- [Docker Internals](https://docs.docker.com/engine/)
+- [WordPress Developer Resources](https://developer.wordpress.org/)
+- [Redis Documentation](https://redis.io/docs/)
 - [Linux Namespaces](https://man7.org/linux/man-pages/man7/namespaces.7.html)
 - [Linux Cgroups](https://man7.org/linux/man-pages/man7/cgroups.7.html)
-- [Container Security](https://docs.docker.com/engine/security/)
-
----
 
 ## Use of AI
 
-AI tools were used to:
+AI tools were used as a supplementary learning resource to deepen my understanding of Docker, Linux system administration, container networking, and service configuration. They also assisted with troubleshooting technical issues and improving project documentation.
 
-- Clarify Docker internal concepts
-- Debug networking and volume configuration issues
-- Improve documentation clarity and structure
-- Generate code comments and explanations
-- Optimize configuration files
-
-All implementation and configuration decisions were manually designed and understood.
-
----
+All implementation and configuration decisions were manually reviewed and understood.
 
 ## Author
 
-**Bouhcine Amezouar**  
-42 Cursus - bamezoua  
-[GitHub](https://github.com/BouhcineAmezouar7)
+**Bouhcine Amezouar — bamezoua**
+
+Software Engineering Student at 1337 & Full-Stack Developer
+
+[GitHub](https://github.com/BouhcineAmezouar7) · [Portfolio](https://bouhcineamezouar.tech)
 
 ---
 
-## License
-
-This project is part of the 42 curriculum and is provided as-is for educational purposes.
+Developed as part of the **1337 Coding School — 42 Network** curriculum.
